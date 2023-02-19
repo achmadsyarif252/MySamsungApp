@@ -25,6 +25,14 @@ interface HealthConnectData {
     )
 
     suspend fun readBloodGlucose(start: Instant, end: Instant)
-    suspend fun writeBloogGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>)
+    suspend fun writeBloodGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>)
+    suspend fun readBloodPressure(start: Instant, end: Instant)
+    suspend fun writeBloodPressure(bloodPressureRecord: List<BloodPressureRecord>)
+    suspend fun readBodyFat(start: Instant, end: Instant)
+    suspend fun writeBodyFat(bodyFatRecord: List<BodyFatRecord>)
+    suspend fun readBodyTemper(start: Instant, end: Instant)
+    suspend fun writeBodyTemper(bodyTemper: List<BodyTemperatureRecord>)
+    suspend fun readBoneMass(start: Instant, end: Instant)
+    suspend fun writeBoneMass(boneMassRecord: List<BoneMassRecord>)
 
 }

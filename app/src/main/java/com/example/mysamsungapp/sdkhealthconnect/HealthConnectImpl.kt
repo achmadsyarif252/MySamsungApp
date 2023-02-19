@@ -104,10 +104,62 @@ class HealthConnectImpl(private val callback: HealthConnectCallback) :
         callback.onReceiveBloodGlucose(response.records)
     }
 
-    override suspend fun writeBloogGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>) {
+    override suspend fun writeBloodGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>) {
         healthConnectClient.insertRecords(
             bloodGlucoseRecord
         )
+    }
+
+    override suspend fun readBloodPressure(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BloodPressureRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceiveBloodPressure(response.records)
+    }
+
+    override suspend fun writeBloodPressure(bloodPressureRecord: List<BloodPressureRecord>) {
+        healthConnectClient.insertRecords(bloodPressureRecord)
+    }
+
+    override suspend fun readBodyFat(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BodyFatRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceiveBodyFat(response.records)
+    }
+
+    override suspend fun writeBodyFat(bodyFatRecord: List<BodyFatRecord>) {
+        healthConnectClient.insertRecords(bodyFatRecord)
+    }
+
+    override suspend fun readBodyTemper(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BodyTemperatureRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceivedBodyTemper(response.records)
+    }
+
+    override suspend fun writeBodyTemper(bodyTemper: List<BodyTemperatureRecord>) {
+        healthConnectClient.insertRecords(bodyTemper)
+    }
+
+    override suspend fun readBoneMass(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BoneMassRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceiveBoneMass(response.records)
+    }
+
+    override suspend fun writeBoneMass(boneMassRecord: List<BoneMassRecord>) {
+        healthConnectClient.insertRecords(boneMassRecord)
     }
 
 }

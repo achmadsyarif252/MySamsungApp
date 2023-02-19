@@ -34,16 +34,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtHD" />
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:entries="@array/my_array"
-        android:prompt="@string/my_prompt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvData"
@@ -52,7 +42,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner2"
+        app:layout_constraintTop_toBottomOf="@id/spinner"
         tools:listitem="@layout/heart_rate_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

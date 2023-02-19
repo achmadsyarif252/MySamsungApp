@@ -30,6 +30,17 @@ class HomeViewModel : ViewModel() {
     private var _bloodGlucose = MutableLiveData<List<BloodGlucoseRecord>>()
     val bloodGlucose: LiveData<List<BloodGlucoseRecord>> = _bloodGlucose
 
+    private var _bloodPressure = MutableLiveData<List<BloodPressureRecord>>()
+    val bloodPressureRecord: LiveData<List<BloodPressureRecord>> = _bloodPressure
+
+    private var _bodyFatRecord = MutableLiveData<List<BodyFatRecord>>()
+    val bodyFatRecord: LiveData<List<BodyFatRecord>> = _bodyFatRecord
+
+    private var _bodyTemper = MutableLiveData<List<BodyTemperatureRecord>>()
+    val bodyTemper: LiveData<List<BodyTemperatureRecord>> = _bodyTemper
+    private var _boneMass = MutableLiveData<List<BoneMassRecord>>()
+    val boneMass: LiveData<List<BoneMassRecord>> = _boneMass
+
     fun initContext(context: Context) {
         healthSDK.initContext(context = context)
     }
@@ -54,6 +65,22 @@ class HomeViewModel : ViewModel() {
 
             override fun onReceiveBloodGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>) {
                 _bloodGlucose.value = bloodGlucoseRecord
+            }
+
+            override fun onReceiveBloodPressure(bloodPressureRecord: List<BloodPressureRecord>) {
+                _bloodPressure.value = bloodPressureRecord
+            }
+
+            override fun onReceiveBodyFat(bodyFat: List<BodyFatRecord>) {
+                _bodyFatRecord.value = bodyFat
+            }
+
+            override fun onReceivedBodyTemper(bodyTemperatureRecord: List<BodyTemperatureRecord>) {
+                _bodyTemper.value = bodyTemperatureRecord
+            }
+
+            override fun onReceiveBoneMass(boneMassRecord: List<BoneMassRecord>) {
+                _boneMass.value = boneMassRecord
             }
         })
 
@@ -103,7 +130,39 @@ class HomeViewModel : ViewModel() {
     }
 
     suspend fun writeBloodGlucose(data: List<BloodGlucoseRecord>) {
-        healthSDK.writeBloogGlucose(data)
+        healthSDK.writeBloodGlucose(data)
+    }
+
+    suspend fun readBloodPressure(start: ZonedDateTime, end: ZonedDateTime) {
+        healthSDK.readBloodPressure(start.toInstant(), end.toInstant())
+    }
+
+    suspend fun writeBloodPressure(data: List<BloodPressureRecord>) {
+        healthSDK.writeBloodPressure(data)
+    }
+
+    suspend fun readBodyFatRecord(start: ZonedDateTime, end: ZonedDateTime) {
+        healthSDK.readBodyFat(start.toInstant(), end.toInstant())
+    }
+
+    suspend fun writeBodyFatRecord(data: List<BodyFatRecord>) {
+        healthSDK.writeBodyFat(data)
+    }
+
+    suspend fun readBodyTemper(start: ZonedDateTime, end: ZonedDateTime) {
+        healthSDK.readBodyTemper(start.toInstant(), end.toInstant())
+    }
+
+    suspend fun writeBodyTemper(data: List<BodyTemperatureRecord>) {
+        healthSDK.writeBodyTemper(data)
+    }
+
+    suspend fun readBoneMass(start: ZonedDateTime, end: ZonedDateTime) {
+        healthSDK.readBoneMass(start.toInstant(), end.toInstant())
+    }
+
+    suspend fun writeBoneMass(data: List<BoneMassRecord>) {
+        healthSDK.writeBoneMass(data)
     }
 
 

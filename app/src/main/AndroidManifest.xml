@@ -16,6 +16,15 @@
         android:theme="@style/Theme.MySamsungApp"
         tools:targetApi="31">
         <activity
+            android:name=".ReadWriteData"
+            android:exported="false" />
+        <activity
+            android:name=".ui.BloodGlucose"
+            android:exported="false" />
+        <activity
+            android:name=".ui.BasalMetabolic"
+            android:exported="false" />
+        <activity
             android:name=".ui.BodyBasalTemperature"
             android:exported="false" />
         <activity

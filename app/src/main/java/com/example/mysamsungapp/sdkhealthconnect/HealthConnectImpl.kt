@@ -2,9 +2,7 @@ package com.example.mysamsungapp.sdkhealthconnect
 
 import android.content.Context
 import androidx.health.connect.client.HealthConnectClient
-import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
-import androidx.health.connect.client.records.BasalBodyTemperatureRecord
-import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.*
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import java.time.ZonedDateTime
@@ -79,6 +77,36 @@ class HealthConnectImpl(private val callback: HealthConnectCallback) :
     override suspend fun writeBasalBodyTempt(bodyTemperatureRecord: List<BasalBodyTemperatureRecord>) {
         healthConnectClient.insertRecords(
             bodyTemperatureRecord
+        )
+    }
+
+    override suspend fun readBasalMetabolicRate(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BasalMetabolicRateRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceivedBasalMetabolicrate(response.records)
+    }
+
+    override suspend fun writeBasalMetabolicRate(basalMetabolicRateRecord: List<BasalMetabolicRateRecord>) {
+        healthConnectClient.insertRecords(
+            basalMetabolicRateRecord
+        )
+    }
+
+    override suspend fun readBloodGlucose(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BloodGlucoseRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceiveBloodGlucose(response.records)
+    }
+
+    override suspend fun writeBloogGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>) {
+        healthConnectClient.insertRecords(
+            bloodGlucoseRecord
         )
     }
 

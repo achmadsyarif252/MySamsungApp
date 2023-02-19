@@ -3,9 +3,7 @@ package com.example.mysamsungapp.viewmodel
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
-import androidx.health.connect.client.records.BasalBodyTemperatureRecord
-import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.*
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +24,12 @@ class HomeViewModel : ViewModel() {
     val bodyBasalBodyTemperatureRecord: LiveData<List<BasalBodyTemperatureRecord>> =
         _basalBodyTemptRecord
 
+    private var _basalMetabolicRate = MutableLiveData<List<BasalMetabolicRateRecord>>()
+    val basalMetabolicRateRecord: LiveData<List<BasalMetabolicRateRecord>> = _basalMetabolicRate
+
+    private var _bloodGlucose = MutableLiveData<List<BloodGlucoseRecord>>()
+    val bloodGlucose: LiveData<List<BloodGlucoseRecord>> = _bloodGlucose
+
     fun initContext(context: Context) {
         healthSDK.initContext(context = context)
     }
@@ -42,6 +46,14 @@ class HomeViewModel : ViewModel() {
 
             override fun onReceivedBasalBodyTempt(basalBodyTempRecord: List<BasalBodyTemperatureRecord>) {
                 _basalBodyTemptRecord.value = basalBodyTempRecord
+            }
+
+            override fun onReceivedBasalMetabolicrate(basalMetabolicRateRecord: List<BasalMetabolicRateRecord>) {
+                _basalMetabolicRate.value = basalMetabolicRateRecord
+            }
+
+            override fun onReceiveBloodGlucose(bloodGlucoseRecord: List<BloodGlucoseRecord>) {
+                _bloodGlucose.value = bloodGlucoseRecord
             }
         })
 
@@ -69,7 +81,6 @@ class HomeViewModel : ViewModel() {
     }
 
     suspend fun readBasalBodyTempt(start: ZonedDateTime, end: ZonedDateTime) {
-        Log.d("HomeViewModel", "readBasalBodyTempt: errorr")
         healthSDK.readBasalBodyTempt(start.toInstant(), end.toInstant())
     }
 
@@ -77,6 +88,22 @@ class HomeViewModel : ViewModel() {
         data: List<BasalBodyTemperatureRecord>
     ) {
         healthSDK.writeBasalBodyTempt(data)
+    }
+
+    suspend fun readBasalMetabolicRate(start: ZonedDateTime, end: ZonedDateTime) {
+        healthSDK.readBasalMetabolicRate(start.toInstant(), end.toInstant())
+    }
+
+    suspend fun writeBasalMetabolicRate(data: List<BasalMetabolicRateRecord>) {
+        healthSDK.writeBasalMetabolicRate(data)
+    }
+
+    suspend fun readBloodGlucose(start: ZonedDateTime, end: ZonedDateTime) {
+        healthSDK.readBloodGlucose(start.toInstant(), end.toInstant())
+    }
+
+    suspend fun writeBloodGlucose(data: List<BloodGlucoseRecord>) {
+        healthSDK.writeBloogGlucose(data)
     }
 
 

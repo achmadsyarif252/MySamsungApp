@@ -16,8 +16,14 @@
         android:theme="@style/Theme.MySamsungApp"
         tools:targetApi="31">
         <activity
-            android:name=".ReadWriteData"
-            android:exported="false" />
+            android:name=".ui.ReadWriteData"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.BloodGlucose"
             android:exported="false" />
@@ -36,11 +42,11 @@
         <activity
             android:name=".ui.HomeActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".MainActivity"

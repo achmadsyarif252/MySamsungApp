@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_prompt">Pilih Jenis Data</string>
+    <array name="my_array">
+        <item>Calories Burned</item>
+        <item>Basal Body Temperature</item>
+        <item>Basal Metabolic Record</item>
+        <item>Blood Glucose</item>
+        <item>Blood Pressure</item>
+        <item>Body Fat</item>
+        <item>Body Water Mass</item>
+        <item>Bone Mass</item>
+        <item>Cervical Mucus</item>
+        <item>Cycling Pedaling</item>
+        <item>Distance Record</item>
+        <item>Elevation Gained</item>
+        <item>Exercise Record</item>
+        <item>Floor Climbed</item>
+        <item>Heart Rate</item>
+        <item>Height</item>
+        <item>Hydration</item>
+        <item>Inter menstrual Bleeding</item>
+        <item>Lean Body Mass</item>
+        <item>Menstruation Flow</item>
+        <item>Menstruation Period</item>
+        <item>Nutrition</item>
+        <item>Ovulation Test</item>
+        <item>Oxygen Saturation</item>
+        <item>Power Record</item>
+        <item>Respiratory Rate</item>
+        <item>Resting Heart Rate</item>
+        <item>Sexual Activity</item>
+        <item>Sleep Session</item>
+        <item>Speed Record</item>
+        <item>Sleep Stage</item>
+        <item>Speed Record</item>
+        <item>Steps Cadence</item>
+        <item>Steps Record</item>
+        <item>Total Calories Burned</item>
+        <item>Vo2Max</item>
+        <item>Weight</item>
+        <item>Wheelchair Pushes</item>
+    </array>
+</resources>

@@ -1,6 +1,7 @@
 package com.example.mysamsungapp.sdkhealthconnect
 
 import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
+import androidx.health.connect.client.records.BasalBodyTemperatureRecord
 import androidx.health.connect.client.records.HeartRateRecord
 import java.time.Instant
 import java.time.ZonedDateTime
@@ -15,9 +16,10 @@ interface HealthConnectData {
 
     suspend fun readActiveCaloriesBurned(start: Instant, end: Instant)
     suspend fun writeActiveCaloriesBurned(
-        start: ZonedDateTime,
-        end: ZonedDateTime,
-        caloriesBurned:List<ActiveCaloriesBurnedRecord>
+        caloriesBurned: List<ActiveCaloriesBurnedRecord>
     )
+
+    suspend fun readBasalBodyTempt(start: Instant, end: Instant)
+    suspend fun writeBasalBodyTempt(basalBodyTemperatureRecord: List<BasalBodyTemperatureRecord>)
 
 }

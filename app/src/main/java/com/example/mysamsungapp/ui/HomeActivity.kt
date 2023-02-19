@@ -32,6 +32,7 @@ class HomeActivity : AppCompatActivity() {
     private fun onClicked(i: Int) {
         when (i) {
             0 -> startActivity(Intent(this@HomeActivity, ActiveCaloryBurned::class.java))
+            1-> startActivity(Intent(this@HomeActivity,BodyBasalTemperature::class.java))
             14 -> startActivity(Intent(this@HomeActivity, HeartRateReadRecordActivity::class.java))
         }
     }

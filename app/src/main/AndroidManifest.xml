@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MySamsungApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.BodyBasalTemperature"
+            android:exported="false" />
+        <activity
             android:name=".ui.ActiveCaloryBurned"
             android:exported="false" />
         <activity

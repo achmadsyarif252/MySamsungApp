@@ -3,6 +3,7 @@ package com.example.mysamsungapp.sdkhealthconnect
 import android.content.Context
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
+import androidx.health.connect.client.records.BasalBodyTemperatureRecord
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
@@ -59,12 +60,25 @@ class HealthConnectImpl(private val callback: HealthConnectCallback) :
     }
 
     override suspend fun writeActiveCaloriesBurned(
-        start: ZonedDateTime,
-        end: ZonedDateTime,
         caloriesBurned: List<ActiveCaloriesBurnedRecord>
     ) {
         healthConnectClient.insertRecords(
             caloriesBurned
+        )
+    }
+
+    override suspend fun readBasalBodyTempt(start: Instant, end: Instant) {
+        val request = ReadRecordsRequest(
+            recordType = BasalBodyTemperatureRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        callback.onReceivedBasalBodyTempt(response.records)
+    }
+
+    override suspend fun writeBasalBodyTempt(bodyTemperatureRecord: List<BasalBodyTemperatureRecord>) {
+        healthConnectClient.insertRecords(
+            bodyTemperatureRecord
         )
     }
 

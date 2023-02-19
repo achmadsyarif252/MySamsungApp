@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mysamsungapp.adapter.InstantFormatter.formatTime
 import com.example.mysamsungapp.databinding.HeartRateLayoutBinding
 import java.time.Instant
 import java.time.ZoneId
@@ -34,8 +35,5 @@ class HeartRateAdapter(private val listData: List<HeartRateRecord>) :
         }
     }
 
-    private fun formatTime(instant: Instant): String {
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
-        return formatter.format(instant.atZone(ZoneId.systemDefault()))
-    }
+
 }

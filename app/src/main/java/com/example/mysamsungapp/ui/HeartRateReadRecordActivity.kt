@@ -25,10 +25,7 @@ class HeartRateReadRecordActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityHeartRateReadRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        homeViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory(application)
-        )[HomeViewModel::class.java]
+        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         homeViewModel.initContext(this)
 
         initRV()
@@ -37,7 +34,7 @@ class HeartRateReadRecordActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initRV() {
         lifecycleScope.launch {
-            homeViewModel.readHeartRecord(ZonedDateTime.now().minusHours(1), ZonedDateTime.now())
+            homeViewModel.readHeartRecord(ZonedDateTime.now().minusDays(7), ZonedDateTime.now())
         }
 
         binding.rvHR.layoutManager = LinearLayoutManager(this)
@@ -70,6 +67,7 @@ class HeartRateReadRecordActivity : AppCompatActivity(), View.OnClickListener {
                         ).show()
                     }
                 }
+                binding.bpm.text.clear()
             }
         }
     }

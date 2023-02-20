@@ -123,6 +123,9 @@ class HomeViewModel : ViewModel() {
     private val _wheelchairPushes = MutableLiveData<List<WheelchairPushesRecord>>()
     val wheelchairPushes: LiveData<List<WheelchairPushesRecord>> = _wheelchairPushes
 
+    private val _onPermissoinGranted = MutableLiveData<Boolean>()
+    val onPermissionGranted: LiveData<Boolean> = _onPermissoinGranted
+
     //wajib dipanggil setelah inisialisasi vM
     fun initContext(context: Context) {
         healthSDK.initContext(context = context)
@@ -132,6 +135,10 @@ class HomeViewModel : ViewModel() {
         HealthConnectImpl(object : HealthConnectCallback {
             override fun onAvailableHC(boolean: Boolean) {
                 _isHCInstalled.value = boolean
+            }
+
+            override fun onPermissionGranted(boolean: Boolean) {
+                _onPermissoinGranted.value = boolean
             }
 
             override fun onReceiveHRData(heartRateRecord: List<HeartRateRecord>) {
@@ -275,8 +282,12 @@ class HomeViewModel : ViewModel() {
             }
         })
 
-     fun isHcAvailable() {
+    fun isHcAvailable() {
         healthSDK.isProviderAvailable()
+    }
+
+    suspend fun checkPermissionAndRun() {
+        healthSDK.checkPermissionAndRun()
     }
 
     suspend fun readHeartRecord(start: ZonedDateTime, end: ZonedDateTime) {

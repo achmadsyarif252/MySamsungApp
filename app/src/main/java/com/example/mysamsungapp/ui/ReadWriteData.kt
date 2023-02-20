@@ -2,12 +2,13 @@ package com.example.mysamsungapp.ui
 
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.health.connect.client.PermissionController
+import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.*
 import androidx.health.connect.client.units.*
 import androidx.health.connect.client.units.BloodGlucose
@@ -20,15 +21,33 @@ import com.example.mysamsungapp.databinding.ActivityReadWriteDataBinding
 import com.example.mysamsungapp.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
-import kotlin.random.Random
 
 class ReadWriteData : AppCompatActivity() {
     private lateinit var binding: ActivityReadWriteDataBinding
     private lateinit var homeViewModel: HomeViewModel
     var selectedItem = 0
+
+    // Create the permissions launcher.
+    val requestPermissionActivityContract =
+        PermissionController.createRequestPermissionResultContract()
+
+    val requestPermissions =
+        registerForActivityResult(requestPermissionActivityContract) { granted ->
+            if (granted.containsAll(PERMISSIONS)) {
+                readActiveCalories()
+            } else {
+                Toast.makeText(
+                    this@ReadWriteData,
+                    "All Permission should accepted",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
     override fun onResume() {
         super.onResume()
         homeViewModel.isHcAvailable()
+
         homeViewModel.isHCInstalled.observe(this) {
             if (it) {
                 Toast.makeText(this@ReadWriteData, "Already Installed", Toast.LENGTH_SHORT)
@@ -38,6 +57,7 @@ class ReadWriteData : AppCompatActivity() {
                 binding.spinner.visibility = View.VISIBLE
                 binding.btnSubmit.visibility = View.VISIBLE
                 binding.hcmissing.visibility = View.GONE
+
             } else {
                 Toast.makeText(this@ReadWriteData, "Not Installed", Toast.LENGTH_SHORT)
                     .show()
@@ -49,6 +69,7 @@ class ReadWriteData : AppCompatActivity() {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReadWriteDataBinding.inflate(layoutInflater)
@@ -60,7 +81,8 @@ class ReadWriteData : AppCompatActivity() {
         binding.rvData.layoutManager = LinearLayoutManager(this)
         binding.hcmissing.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getString(R.string.market_url) + "?id=" + getString(R.string.health_connect_package))
+            intent.data =
+                Uri.parse(getString(R.string.market_url) + "?id=" + getString(R.string.health_connect_package))
             startActivity(intent)
         }
 
@@ -190,6 +212,22 @@ class ReadWriteData : AppCompatActivity() {
                     }
                     "Basal Body Temperature" -> {
                         binding.edtHD.hint = "Basal Body Temp"
+//                        lifecycleScope.launch {
+//                            homeViewModel.checkPermissionAndRun()
+//                        }
+//                        homeViewModel.onPermissionGranted.observe(this@ReadWriteData) { permission ->
+//                            if (!permission) {
+//                                requestPermissions.launch(PERMISSIONS)
+//                                Toast.makeText(
+//                                    this@ReadWriteData,
+//                                    "All not oke",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            } else {
+//                                Toast.makeText(this@ReadWriteData, "All okkeee", Toast.LENGTH_SHORT)
+//                                    .show()
+//                            }
+//                        }
                         readBasalBodyTemp()
                     }
                     "Basal Metabolic Record" -> {
@@ -1415,6 +1453,117 @@ class ReadWriteData : AppCompatActivity() {
             )
             readBasalBodyTemp()
         }
+    }
+
+    companion object {
+        // build a set of permissions for required data types
+        val PERMISSIONS =
+            setOf(
+                HealthPermission.createReadPermission(ActiveCaloriesBurnedRecord::class),
+                HealthPermission.createWritePermission(ActiveCaloriesBurnedRecord::class),
+
+                HealthPermission.createReadPermission(BasalBodyTemperatureRecord::class),
+                HealthPermission.createWritePermission(BasalBodyTemperatureRecord::class),
+
+                HealthPermission.createReadPermission(BasalMetabolicRateRecord::class),
+                HealthPermission.createWritePermission(BasalMetabolicRateRecord::class),
+
+                HealthPermission.createReadPermission(BloodGlucoseRecord::class),
+                HealthPermission.createWritePermission(BloodGlucoseRecord::class),
+
+                HealthPermission.createReadPermission(BloodPressureRecord::class),
+                HealthPermission.createWritePermission(BloodPressureRecord::class),
+
+                HealthPermission.createReadPermission(BodyFatRecord::class),
+                HealthPermission.createWritePermission(BodyFatRecord::class),
+
+                HealthPermission.createReadPermission(BodyTemperatureRecord::class),
+                HealthPermission.createWritePermission(BodyTemperatureRecord::class),
+
+                HealthPermission.createReadPermission(BoneMassRecord::class),
+                HealthPermission.createWritePermission(BoneMassRecord::class),
+
+                HealthPermission.createReadPermission(CervicalMucusRecord::class),
+                HealthPermission.createWritePermission(CervicalMucusRecord::class),
+
+                HealthPermission.createReadPermission(CyclingPedalingCadenceRecord::class),
+                HealthPermission.createWritePermission(CyclingPedalingCadenceRecord::class),
+
+                HealthPermission.createReadPermission(DistanceRecord::class),
+                HealthPermission.createWritePermission(DistanceRecord::class),
+
+                HealthPermission.createReadPermission(ElevationGainedRecord::class),
+                HealthPermission.createWritePermission(ElevationGainedRecord::class),
+
+                HealthPermission.createReadPermission(ExerciseSessionRecord::class),
+                HealthPermission.createWritePermission(ExerciseSessionRecord::class),
+
+                HealthPermission.createReadPermission(FloorsClimbedRecord::class),
+                HealthPermission.createWritePermission(FloorsClimbedRecord::class),
+
+                HealthPermission.createReadPermission(HeartRateRecord::class),
+                HealthPermission.createWritePermission(HeartRateRecord::class),
+
+                HealthPermission.createReadPermission(HeightRecord::class),
+                HealthPermission.createWritePermission(HeightRecord::class),
+
+                HealthPermission.createReadPermission(HydrationRecord::class),
+                HealthPermission.createWritePermission(HydrationRecord::class),
+
+                HealthPermission.createReadPermission(LeanBodyMassRecord::class),
+                HealthPermission.createWritePermission(LeanBodyMassRecord::class),
+
+                HealthPermission.createReadPermission(MenstruationFlowRecord::class),
+                HealthPermission.createWritePermission(MenstruationFlowRecord::class),
+
+                HealthPermission.createReadPermission(NutritionRecord::class),
+                HealthPermission.createWritePermission(NutritionRecord::class),
+
+                HealthPermission.createReadPermission(OvulationTestRecord::class),
+                HealthPermission.createWritePermission(OvulationTestRecord::class),
+
+                HealthPermission.createReadPermission(OxygenSaturationRecord::class),
+                HealthPermission.createWritePermission(OxygenSaturationRecord::class),
+
+                HealthPermission.createReadPermission(PowerRecord::class),
+                HealthPermission.createWritePermission(PowerRecord::class),
+
+                HealthPermission.createReadPermission(RespiratoryRateRecord::class),
+                HealthPermission.createWritePermission(RespiratoryRateRecord::class),
+
+                HealthPermission.createReadPermission(RestingHeartRateRecord::class),
+                HealthPermission.createWritePermission(RestingHeartRateRecord::class),
+
+                HealthPermission.createReadPermission(SexualActivityRecord::class),
+                HealthPermission.createWritePermission(SexualActivityRecord::class),
+
+                HealthPermission.createReadPermission(SleepSessionRecord::class),
+                HealthPermission.createWritePermission(SleepSessionRecord::class),
+
+                HealthPermission.createReadPermission(SleepStageRecord::class),
+                HealthPermission.createWritePermission(SleepStageRecord::class),
+
+                HealthPermission.createReadPermission(SpeedRecord::class),
+                HealthPermission.createWritePermission(SpeedRecord::class),
+
+                HealthPermission.createReadPermission(StepsCadenceRecord::class),
+                HealthPermission.createWritePermission(StepsCadenceRecord::class),
+
+                HealthPermission.createReadPermission(StepsRecord::class),
+                HealthPermission.createWritePermission(StepsRecord::class),
+
+                HealthPermission.createReadPermission(TotalCaloriesBurnedRecord::class),
+                HealthPermission.createWritePermission(TotalCaloriesBurnedRecord::class),
+
+                HealthPermission.createReadPermission(Vo2MaxRecord::class),
+                HealthPermission.createWritePermission(Vo2MaxRecord::class),
+
+                HealthPermission.createReadPermission(WeightRecord::class),
+                HealthPermission.createWritePermission(WeightRecord::class),
+
+                HealthPermission.createReadPermission(WheelchairPushesRecord::class),
+                HealthPermission.createWritePermission(WheelchairPushesRecord::class),
+            )
     }
 }
 

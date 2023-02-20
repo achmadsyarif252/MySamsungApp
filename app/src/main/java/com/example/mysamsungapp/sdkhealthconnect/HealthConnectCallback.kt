@@ -4,6 +4,7 @@ import androidx.health.connect.client.records.*
 
 interface HealthConnectCallback {
     fun onAvailableHC(boolean: Boolean)
+    fun onPermissionGranted(boolean: Boolean)
     fun onReceiveHRData(heartRateRecord: List<HeartRateRecord>)
     fun onReceiveCaloriesBurned(caloriesBurnedRecord: List<ActiveCaloriesBurnedRecord>)
     fun onReceivedBasalBodyTempt(basalBodyTempRecord: List<BasalBodyTemperatureRecord>)

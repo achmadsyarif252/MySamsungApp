@@ -5,7 +5,9 @@ import java.time.Instant
 import java.time.ZonedDateTime
 
 interface HealthConnectData {
-     fun isProviderAvailable()
+    fun isProviderAvailable()
+
+    suspend fun checkPermissionAndRun()
     suspend fun readHeartRecord(start: Instant, end: Instant)
     suspend fun writeHeartRate(
         start: ZonedDateTime,

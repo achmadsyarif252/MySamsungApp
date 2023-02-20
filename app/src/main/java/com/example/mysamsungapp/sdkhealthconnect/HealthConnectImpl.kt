@@ -2,9 +2,12 @@ package com.example.mysamsungapp.sdkhealthconnect
 
 import android.content.Context
 import androidx.health.connect.client.HealthConnectClient
+import androidx.health.connect.client.PermissionController
+import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.*
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
+import com.example.mysamsungapp.ui.ReadWriteData.Companion.PERMISSIONS
 import java.time.ZonedDateTime
 import java.time.Instant
 
@@ -19,6 +22,7 @@ class HealthConnectImpl(private val callback: HealthConnectCallback) :
         this.context = context
     }
 
+
     override fun isProviderAvailable() {
         if (HealthConnectClient.isAvailable(context)) {
             // Health Connect is available and installed.
@@ -28,6 +32,16 @@ class HealthConnectImpl(private val callback: HealthConnectCallback) :
             callback.onAvailableHC(false)
         }
 
+    }
+
+    override suspend fun checkPermissionAndRun() {
+        val granted =
+            healthConnectClient.permissionController.getGrantedPermissions(PERMISSIONS)
+        if (granted.containsAll(PERMISSIONS)) {
+            callback.onPermissionGranted(true)
+        } else {
+            callback.onPermissionGranted(false)
+        }
     }
 
     override suspend fun readHeartRecord(start: Instant, end: Instant) {

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Insert Value"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,6 +23,7 @@
         android:layout_marginTop="16dp"
         android:entries="@array/my_array"
         android:prompt="@string/my_prompt"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/btnSubmit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtHD" />
@@ -31,6 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Insert"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edtHD" />
 
@@ -40,9 +43,24 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner"
         tools:listitem="@layout/heart_rate_layout" />
+
+    <TextView
+        android:id="@+id/hcmissing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Health Connect Is Note Installed\nInstall Health Connect Here"
+        android:textAlignment="center"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

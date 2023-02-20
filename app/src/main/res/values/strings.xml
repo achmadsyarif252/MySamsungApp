@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MySamsungApp</string>
+    <string name="not_installed_tag">not_installed_tag</string>
+    <string name="market_url">market://details</string>
+    <string name="health_connect_package">com.google.android.apps.healthdata</string>
+    <string name="onboarding_url">healthconnect://onboarding</string>
+    <string name="not_installed_description">
+        Health Connect is supported on this device, but is not currently installed.
+    </string>
+    <string name="not_installed_link_text">
+        To use this sample, and other apps using Health Connect, please install the Health Connect
+        package from Google Play.
+    </string>
 </resources>

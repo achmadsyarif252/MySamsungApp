@@ -10,9 +10,7 @@ import androidx.health.connect.client.units.Energy
 import androidx.health.connect.client.units.Mass
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mysamsungapp.adapter.HeartRateAdapter
 import com.example.mysamsungapp.databinding.ActivityMainBinding
-import com.example.mysamsungapp.sdkhealthconnect.HealthConnectAvailability
 import kotlinx.coroutines.*
 import java.time.Instant
 import java.time.ZonedDateTime
@@ -20,7 +18,6 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private val healthConnectClient by lazy { HealthConnectClient.getOrCreate(this) }
-    private var availability = HealthConnectAvailability.NOT_SUPPORTED
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -25,14 +25,13 @@ class HeartRateAdapter(private val listData: List<HeartRateRecord>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        listData.forEach {
-            for (i in it.samples.indices) {
-                holder.binding.tvData.text = """
-                    BPM : ${listData[position].samples[i].beatsPerMinute}
-                    Time : ${formatTime(listData[position].samples[i].time)}
-                """.trimIndent()
-            }
+        for (i in 0 until listData[position].samples.size) {
+            holder.binding.tvData.text = holder.binding.tvData.text.toString() + """
+                Heart Rate ${listData[position].samples[i].beatsPerMinute} BPM
+                Time :${InstantFormatter.formatTime(listData[position].samples[i].time)}
+            """.trimIndent()
         }
+
     }
 
 
